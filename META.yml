@@ -1,0 +1,8 @@
+--- #YAML:1.0
+name: Catalyst-View-HTML-Template-Compiled
+version: 0.02
+author:
+  - Sascha Kiefer, C<esskar@cpan.org>
+abstract: HTML::Template::Compiled View Class
+license: perl
+generated_by: Module::Build version 0.2611, without YAML.pm

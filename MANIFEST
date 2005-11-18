@@ -1,0 +1,11 @@
+Changes
+Makefile.PL
+Build.PL
+MANIFEST
+README
+META.yml
+t/01use.t
+t/02pod.t
+t/03podcoverage.t
+lib/Catalyst/View/HTML/Template/Compiled.pm
+lib/Catalyst/Helper/View/HTML/Template/Compiled.pm
