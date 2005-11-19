@@ -1,11 +1,11 @@
-package Catalyst::View::HTML::Template::Compiled;
+﻿package Catalyst::View::HTML::Template::Compiled;
 
 use strict;
 use base 'Catalyst::Base';
 
 use HTML::Template::Compiled;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
@@ -15,13 +15,13 @@ Catalyst::View::HTML::Template::Compiled - HTML::Template::Compiled View Class
 
     # use the helper
     script/myapp_create.pl view HTML::Template::Compiled HTML::Template::Compiled
-    
+
     # lib/MyApp/View/HTML/Template.pm
     package MyApp::View::HTML::Template::Compiled;
 
     use base 'Catalyst::View::HTML::Template::Compiled';
 
-    __PACKAGE__->config(        
+    __PACKAGE__->config(
         # any HTML::Template::Compiled configurations items go here
         # see HTML::Template::Compiled documentation for more details
     );
@@ -42,10 +42,10 @@ class.
 
 =item process
 
-Renders the template specified in I< $c->stash->{template} >, I< $c->request->match >, 
+Renders the template specified in I< $c->stash->{template} >, I< $c->request->match >,
 I< $c->config->{template}->{filename} > or I< __PACKAGE__->config->{filename} >.
 Template params are set up from the contents of I< $c->stash >,
-augmented with C<base> set to I< $c->req->base > and I< name > to 
+augmented with C<base> set to I< $c->req->base > and I< name > to
 I< $c->config->{name} >.  Output is stored in I< $c->response->body >.
 
 =cut
@@ -80,14 +80,14 @@ sub process {
 
     $c->log->debug(qq/Rendering template "$filename"/) if $c->debug;
 
-    my $htc = HTML::Template->new(%options);
-    
+    my $htc = HTML::Template::Compiled->new(%options);
+
     $htc->param(
         base => $c->req->base,
         name => $c->config->{name},
         %{ $c->stash }
     );
-    
+
     my $body;
 
     eval { $body = $htc->output };
@@ -148,3 +148,4 @@ under the same terms as Perl itself.
 =cut
 
 1;
+

@@ -1,8 +1,7 @@
 Changes
 Makefile.PL
-Build.PL
 MANIFEST
-README
+readme
 META.yml
 t/01use.t
 t/02pod.t
