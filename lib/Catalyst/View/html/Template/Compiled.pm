@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 NAME
 
@@ -67,7 +67,7 @@ sub process {
     }
 
     my $path = $self->_build_path(
-        $c, delete $c->config->{template}->{path},
+        $c, $c->config->{template}->{path},
         $c->config->{root}, $c->config->{root} . '/base',
     );
 
