@@ -1,11 +1,12 @@
-﻿package Catalyst::View::HTML::Template::Compiled;
+package Catalyst::View::HTML::Template::Compiled;
 
 use strict;
 use base 'Catalyst::Base';
 
-use HTML::Template::Compiled;
+use HTML::Template::Compiled ();
+use Path::Class              ();
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 NAME
 
@@ -65,22 +66,35 @@ sub process {
         return 0;
     }
 
-    my $path =
-      $self->_merge_path( $c,
-        [ $c->config->{root}, $c->config->{root} . '/base' ],
-        $self->config );
-    $path = $self->_merge_path( $c, $path, $c->config->{template} );
+    my $path = $self->_build_path(
+        $c, delete $c->config->{template}->{path},
+        $c->config->{root}, $c->config->{root} . '/base',
+    );
 
     my %options = (
         %{ $self->config },
         %{ $c->config->{template} },
-        $filename => $filename,
-        path      => $path,
+        filename => $filename,
+        path     => $path,
     );
 
     $c->log->debug(qq/Rendering template "$filename"/) if $c->debug;
 
-    my $htc = HTML::Template::Compiled->new(%options);
+    my $htc = undef;
+    if ( $HTML::Template::Compiled::VERSION <= 0.53 ) {    # avoid known bugs
+        foreach (@$path) {
+            eval {
+                $htc = HTML::Template::Compiled->new( %options, path => $_ );
+            };
+            last unless $@;
+        }
+    }
+    else {
+        $htc = HTML::Template::Compiled->new(%options);
+    }
+
+    die "Could not create HTML::Template::Compiled instance."
+      unless defined $htc;
 
     $htc->param(
         base => $c->req->base,
@@ -107,6 +121,29 @@ sub process {
     $c->response->body($body);
 
     return 1;
+}
+
+sub _build_path {
+    my ( $self, $c, @paths ) = @_;
+
+    my @retval = ();
+    foreach my $path (@paths) {
+        next unless defined $path;
+
+        if ( ref($path) eq 'ARRAY' ) {
+            push @retval, $self->_build_path( $c, @{$path} );
+        }
+        elsif ( ref($path) eq 'Path::Class::Dir' ) {
+
+            # stringify it
+            push @retval, "" . $path->absolute;
+        }
+        else {
+            push @retval, $self->_build_path( $c, Path::Class::dir($path) );
+        }
+    }
+
+    return wantarray ? @retval : [@retval];
 }
 
 sub _merge_path {

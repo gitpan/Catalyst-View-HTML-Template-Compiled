@@ -1,12 +1,13 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Catalyst-View-HTML-Template-Compiled
-version:      0.03
+version:      0.04
 version_from: lib/Catalyst/View/HTML/Template/Compiled.pm
 installdirs:  site
 requires:
     Catalyst:                      5
     HTML::Template::Compiled:      0.53
+    Path::Class:                   0.10
 
 distribution_type: module
 generated_by: ExtUtils::MakeMaker version 6.17
