@@ -1,5 +1,11 @@
 Revision history for Perl extension Catalyst::View::HTML::Template::Compiled.
 
+0.06  Fri Nov 25 02:30:00 2005
+	- Added $htc->param(c => $c) by default
+	- Set method_call => '.', # default ->
+	- Set deref       => '/', # default .
+	- Added use_default_path
+
 0.05  Fri Nov 23 16:56:00 2005
 	- Fixed a path problem
 
