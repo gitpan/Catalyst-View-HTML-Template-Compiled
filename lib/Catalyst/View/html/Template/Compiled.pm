@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 =head1 NAME
 
@@ -45,12 +45,12 @@ class.
 
 =item process
 
-Renders the template specified in I< $c->stash->{template} >, I< $c->request->match >,
-I< $c->config->{template}->{filename} > or I< __PACKAGE__->config->{filename} >.
+Renders the template specified in I<< $c->stash->{template} >>, I<< $c->request->match >>,
+I<< $c->config->{template}->{filename} >> or I<< __PACKAGE__->config->{filename} >>.
 
-Template params are set up from the contents of I< $c->stash >,
-augmented with C<base> set to I< $c->req->base >, I< name > to
-I< $c->config->{name} > and I< c > to I< $c >. Output is stored in I< $c->response->body >.
+Template params are set up from the contents of I<< $c->stash >>,
+augmented with C<base> set to I<< $c->req->base >>, I<< name >> to
+I<< $c->config->{name} >> and I<< c >> to I<< $c >>. Output is stored in I<< $c->response->body >>.
 
 =cut
 
@@ -182,11 +182,11 @@ sub _merge_path {
 
 =item config
 
-C< use_default_path >: if set, will include I< $c->config->{root} > and
-I< $c->config->{root} . '/base' > to look for the template. I< Defaults to 1 >.
+C<< use_default_path >>: if set, will include I<< $c->config->{root} >> and
+I<< $c->config->{root} . '/base' >> to look for the template. I<< Defaults to 1 >>.
 
 This also allows your view subclass to pass additional settings to the
-C<HTML::Template::Compiled> config hash.
+C<< HTML::Template::Compiled >> config hash.
 
 =back
 
