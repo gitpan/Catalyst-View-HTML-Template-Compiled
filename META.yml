@@ -1,6 +1,6 @@
 ---
 name: Catalyst-View-HTML-Template-Compiled
-version: 0.10
+version: 0.11
 author:
   - 'Sascha Kiefer, C<esskar@cpan.org>'
 abstract: HTML::Template::Compiled View Class
@@ -15,5 +15,5 @@ provides:
     version: 0.03
   Catalyst::View::HTML::Template::Compiled:
     file: lib/Catalyst/View/HTML/Template/Compiled.pm
-    version: 0.10
+    version: 0.11
 generated_by: Module::Build version 0.2611
