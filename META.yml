@@ -1,13 +1,19 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Catalyst-View-HTML-Template-Compiled
-version:      0.08
-version_from: lib/Catalyst/View/HTML/Template/Compiled.pm
-installdirs:  site
+---
+name: Catalyst-View-HTML-Template-Compiled
+version: 0.10
+author:
+  - 'Sascha Kiefer, C<esskar@cpan.org>'
+abstract: HTML::Template::Compiled View Class
+license: perl
 requires:
-    Catalyst:                      5
-    HTML::Template::Compiled:      0.53
-    Path::Class:                   0.10
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.17
+  Catalyst: 5
+  HTML::Template::Compiled: 0.53
+  Path::Class: 0.10
+provides:
+  Catalyst::Helper::View::HTML::Template::Compiled:
+    file: lib/Catalyst/Helper/View/HTML/Template/Compiled.pm
+    version: 0.03
+  Catalyst::View::HTML::Template::Compiled:
+    file: lib/Catalyst/View/HTML/Template/Compiled.pm
+    version: 0.10
+generated_by: Module::Build version 0.2611

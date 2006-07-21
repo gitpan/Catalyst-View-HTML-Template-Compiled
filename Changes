@@ -1,6 +1,9 @@
 Revision history for Perl extension Catalyst::View::HTML::Template::Compiled.
 
-0.08  Wed Dec 14 23:39:41 2004
+0.10  Fri Jul 21 10:39:11 2006
+	- Switched to Module::Build
+
+0.08  Wed Dec 14 23:39:41 2005
 	- Fixed case for directory names
 
 0.07  Thu Dec  1 01:46:35 2005

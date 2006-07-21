@@ -1,10 +1,11 @@
+Build.pl
 Changes
-Makefile.PL
-MANIFEST
-readme
-META.yml
+lib/Catalyst/Helper/View/HTML/Template/Compiled.pm
+lib/Catalyst/View/HTML/Template/Compiled.pm
+MANIFEST			This list of files
 t/01use.t
 t/02pod.t
 t/03podcoverage.t
-lib/Catalyst/Helper/View/HTML/Template/Compiled.pm
-lib/Catalyst/View/HTML/Template/Compiled.pm
+META.yml
+Makefile.PL
+README

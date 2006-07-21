@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.08';
+our $VERSION = '0.10';
 
 =head1 NAME
 
@@ -77,12 +77,15 @@ sub process {
     my $path = $self->_build_path(
         $c,
         $template->{path},
+        $c->path_to($template->{path}),
         (
             $template->{use_default_path}
             ? ( $c->config->{root}, $c->config->{root} . '/base' )
             : ()
         ),
     );
+
+    # die join(", ", @$path);
 
     my %options = (
         method_call => '.',    # default ->
