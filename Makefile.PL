@@ -2,14 +2,15 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
+          'PL_FILES' => {},
+          'INSTALLDIRS' => 'site',
           'NAME' => 'Catalyst::View::HTML::Template::Compiled',
+          'EXE_FILES' => [],
           'VERSION_FROM' => 'lib/Catalyst/View/HTML/Template/Compiled.pm',
           'PREREQ_PM' => {
-                           'Catalyst' => '5',
                            'HTML::Template::Compiled' => '0.53',
-                           'Path::Class' => '0.10'
-                         },
-          'INSTALLDIRS' => 'site',
-          'PL_FILES' => {}
+                           'Path::Class' => '0.1',
+                           'Catalyst' => 5
+                         }
         )
 ;

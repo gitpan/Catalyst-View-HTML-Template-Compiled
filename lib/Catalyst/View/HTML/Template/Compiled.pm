@@ -1,4 +1,4 @@
-package Catalyst::View::HTML::Template::Compiled;
+﻿package Catalyst::View::HTML::Template::Compiled;
 
 use strict;
 use base 'Catalyst::Base';
@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 =head1 NAME
 
@@ -71,6 +71,7 @@ sub process {
 
     my $template = $c->config->{template};
 
+    $template->{path} ||= '.';
     $template->{use_default_path} = 1
       unless defined $template->{use_default_path};
 
@@ -88,8 +89,6 @@ sub process {
     # die join(", ", @$path);
 
     my %options = (
-        method_call => '.',    # default ->
-        deref       => '/',    # default .
 
         %{ $self->config },
         %{$template},
