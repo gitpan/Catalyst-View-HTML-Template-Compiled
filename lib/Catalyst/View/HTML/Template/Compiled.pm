@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 =head1 NAME
 
@@ -58,9 +58,11 @@ sub process {
     my ( $self, $c ) = @_;
 
     $c->config->{template} ||= {};
+    $c->config->{template}->{extension} ||= '';
 
     my $filename = $c->stash->{template}
-      || $c->req->match
+      || $c->request->action . $c->config->{template}->{extension}
+      || $c->request->match . $c->config->{template}->{extension}
       || $c->config->{template}->{filename}
       || $self->config->{filename};
 
@@ -85,8 +87,6 @@ sub process {
             : ()
         ),
     );
-
-    # die join(", ", @$path);
 
     my %options = (
 
@@ -116,14 +116,13 @@ sub process {
       unless defined $htc;
 
     $htc->param(
-        base => $c->req->base,
+        base => $c->request->base,
         name => $c->config->{name},
         c    => $c,
         %{ $c->stash }
     );
 
     my $body;
-
     eval { $body = $htc->output };
 
     if ( my $error = $@ ) {
@@ -134,9 +133,8 @@ sub process {
         return 0;
     }
 
-    unless ( $c->response->headers->content_type ) {
-        $c->res->headers->content_type('text/html; charset=utf-8');
-    }
+    $c->res->headers->content_type('text/html; charset=utf-8')
+      unless ( $c->response->headers->content_type );
 
     $c->response->body($body);
 

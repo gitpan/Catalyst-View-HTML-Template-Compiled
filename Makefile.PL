@@ -8,7 +8,7 @@ WriteMakefile
           'EXE_FILES' => [],
           'VERSION_FROM' => 'lib/Catalyst/View/HTML/Template/Compiled.pm',
           'PREREQ_PM' => {
-                           'HTML::Template::Compiled' => '0.53',
+                           'HTML::Template::Compiled' => '0.8',
                            'Path::Class' => '0.1',
                            'Catalyst' => 5
                          }

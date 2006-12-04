@@ -1,6 +1,6 @@
 ---
 name: Catalyst-View-HTML-Template-Compiled
-version: 0.12
+version: 0.13
 author:
   - 'Sascha Kiefer, C<esskar@cpan.org>'
 abstract: HTML::Template::Compiled View Class
@@ -9,7 +9,7 @@ resources:
   license: http://dev.perl.org/licenses/
 requires:
   Catalyst: 5
-  HTML::Template::Compiled: 0.53
+  HTML::Template::Compiled: 0.8
   Path::Class: 0.1
 provides:
   Catalyst::Helper::View::HTML::Template::Compiled:
