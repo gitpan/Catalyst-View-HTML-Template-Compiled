@@ -1,4 +1,4 @@
-﻿package Catalyst::View::HTML::Template::Compiled;
+package Catalyst::View::HTML::Template::Compiled;
 
 use strict;
 use base 'Catalyst::Base';
@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 =head1 NAME
 
@@ -57,30 +57,24 @@ I<< $c->config->{name} >> and I<< c >> to I<< $c >>. Output is stored in I<< $c-
 sub process {
     my ( $self, $c ) = @_;
 
-    $c->config->{template} ||= {};
-    $c->config->{template}->{extension} ||= '';
-
-    my $filename = $c->stash->{template}
-      || $c->request->action . $c->config->{template}->{extension}
-      || $c->request->match . $c->config->{template}->{extension}
-      || $c->config->{template}->{filename}
-      || $self->config->{filename};
-
-    unless ($filename) {
-        $c->log->debug('No template specified for rendering') if $c->debug;
-        return 0;
+    my $template = {};
+    foreach (qw/View::HTML::Template::Compiled V::HTML::Template::Compiled View::HTC V::HTC template/) {
+        if(exists $c->config->{$_}) {
+            $template = $c->config->{$_};
+            last;
+        }
     }
 
-    my $template = $c->config->{template};
-
-    $template->{path} ||= '.';
     $template->{use_default_path} = 1
       unless defined $template->{use_default_path};
 
+    my $templ_path = $template->{path} || '';
+    $templ_path = [$templ_path] unless 'ARRAY' eq ref $templ_path;
+
     my $path = $self->_build_path(
         $c,
-        $template->{path},
-        $c->path_to($template->{path}),
+        $templ_path,
+        ( map { $c->path_to($_) } @$templ_path ),
         (
             $template->{use_default_path}
             ? ( $c->config->{root}, $c->config->{root} . '/base' )
@@ -89,31 +83,45 @@ sub process {
     );
 
     my %options = (
-
         %{ $self->config },
         %{$template},
 
-        filename => $filename,
-        path     => $path,
+        path => $path,
     );
 
-    $c->log->debug(qq/Rendering template "$filename"/) if $c->debug;
-
-    my $htc = undef;
-    if ( $HTML::Template::Compiled::VERSION <= 0.53 ) {    # avoid known bugs
-        foreach (@$path) {
-            eval {
-                $htc = HTML::Template::Compiled->new( %options, path => $_ );
-            };
-            last unless $@;
-        }
+    my $htc;
+    my $extension = $template->{extension} || '';
+    if ($extension) {
+        $extension = ".$extension"
+          unless substr( $extension, 0, 1 ) eq '.';
     }
-    else {
-        $htc = HTML::Template::Compiled->new(%options);
-    }
+    my $prefix = $template->{prefix} || '';
+    my @filenames = (
+        $c->stash->{template},
+        $prefix . $c->request->match . $extension,
+        $prefix . $c->request->action . $extension,
+        $c->config->{template}->{filename},
+        $self->config->{filename},
+    );
+    my $filename;
+    foreach $filename (@filenames) {
+        next unless $filename;
 
-    die "Could not create HTML::Template::Compiled instance."
-      unless defined $htc;
+        $c->log->debug(qq/Trying to render template "$filename"/)
+          if $c->debug;
+
+        $options{filename} = $filename;
+        eval { $htc = HTML::Template::Compiled->new(%options); };
+        next if $@;
+    }
+    unless ( defined $htc ) {
+        my $error =
+          "Unable to render one of the following templates: "
+          . join( "\t", map { "\t$_" } @filenames );
+        $c->log->error($error);
+        $c->error($error);
+        return 0;
+    }
 
     $htc->param(
         base => $c->request->base,
@@ -206,4 +214,3 @@ under the same terms as Perl itself.
 =cut
 
 1;
-

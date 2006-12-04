@@ -10,7 +10,7 @@ WriteMakefile
           'PREREQ_PM' => {
                            'HTML::Template::Compiled' => '0.8',
                            'Path::Class' => '0.1',
-                           'Catalyst' => 5
+                           'Catalyst' => '5.7'
                          }
         )
 ;

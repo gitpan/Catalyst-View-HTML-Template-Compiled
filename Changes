@@ -1,6 +1,10 @@
 Revision history for Perl extension Catalyst::View::HTML::Template::Compiled.
 
-0.12  Wef Aug 13 20:39:11 2006
+0.14  04.12.2006 01:48
+    - internal changes
+    - now tries more possible filenames before dieing
+
+0.12  Wed Aug 13 20:39:11 2006
     - $c->config->{template}->{path} defaults now to '.'
     - deprecated HTC options 'deref' and 'method_call' removed
 

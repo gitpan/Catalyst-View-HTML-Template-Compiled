@@ -6,12 +6,12 @@ use Module::Build;
 
 my $build = Module::Build->new(
     create_makefile_pl => 'traditional',
-    dist_version       => 0.13,
+    dist_version_from  => 'lib/Catalyst/View/HTML/Template/Compiled.pm',
     license            => 'perl',
     module_name        => "Catalyst::View::HTML::Template::Compiled",
     requires           => {
         'HTML::Template::Compiled' => 0.80,
-        'Catalyst'                 => 5,
+        'Catalyst'                 => 5.7,
         'Path::Class'              => 0.10,
     },
     create_readme => 1,
