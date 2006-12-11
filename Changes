@@ -1,5 +1,8 @@
 Revision history for Perl extension Catalyst::View::HTML::Template::Compiled.
 
+0.15  12.12.2006 00:50
+    - fixed: wrong template picked
+
 0.14  04.12.2006 01:48
     - internal changes
     - now tries more possible filenames before dieing

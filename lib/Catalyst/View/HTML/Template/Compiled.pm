@@ -6,7 +6,7 @@ use base 'Catalyst::Base';
 use HTML::Template::Compiled ();
 use Path::Class              ();
 
-our $VERSION = '0.14';
+our $VERSION = '0.15';
 
 =head1 NAME
 
@@ -112,7 +112,9 @@ sub process {
 
         $options{filename} = $filename;
         eval { $htc = HTML::Template::Compiled->new(%options); };
-        next if $@;
+        last unless $@;
+
+        $c->log->debug( "HTC error: $@" ) if $c->debug;
     }
     unless ( defined $htc ) {
         my $error =
